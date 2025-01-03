@@ -1,2 +1,3 @@
 this is file number 1
 this is new textg
+this is new text

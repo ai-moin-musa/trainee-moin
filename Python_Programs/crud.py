@@ -135,7 +135,9 @@ while True:
         choice = int(input("Enter choice: "))  
         
         if choice == 1:
+        
             while True:
+            
                 print("""
                     ****ADD****
                     Select option:
@@ -144,9 +146,11 @@ while True:
                       3. City
                       4. Exit
                 """)
+                
                 try:
                     sub_choice = int(input("Enter choice: "))
                     if sub_choice == 1:
+             
                         while True:
                             try:
                                 country = input_country()
@@ -161,8 +165,11 @@ while True:
                             except ValueError:
                                 print("Invalid input. Please enter a string.")
                                 continue
+                                
                     elif sub_choice == 2:
+                    
                         while True:
+                        
                             Display_country()
                             if not is_country_empty(): 
                                 break
@@ -179,7 +186,8 @@ while True:
                             else:
                                 break
 
-                    elif sub_choice == 3:       
+                    elif sub_choice == 3:  
+                        
                         while True: 
                             Display_country()
                             if not is_country_empty():
@@ -215,6 +223,7 @@ while True:
                     continue
         
         elif choice == 2:
+        
             while True:
                 print("""
                     ****Update*****
@@ -227,6 +236,7 @@ while True:
                 try:
                     sub_choice = int(input("Enter choice: "))
                     if sub_choice == 1:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -243,7 +253,9 @@ while True:
                                 continue
                             else:
                                 break
+                                
                     elif sub_choice == 2:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -267,6 +279,7 @@ while True:
                                 break
                                 
                     elif sub_choice == 3:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -296,6 +309,7 @@ while True:
                                 continue
                             else:
                                 break
+                                
                     elif sub_choice == 4:
                         break
                     else:
@@ -305,6 +319,7 @@ while True:
                     continue
         
         elif choice == 3:
+        
             while True:
                 print("""
                     ****Delete*****
@@ -317,6 +332,7 @@ while True:
                 try:
                     sub_choice = int(input("Enter choice: "))
                     if sub_choice == 1:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -331,7 +347,9 @@ while True:
                                 continue
                             else:
                                 break
+                                
                     elif sub_choice == 2:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -352,7 +370,9 @@ while True:
                                 continue
                             else:
                                 break
+                                
                     elif sub_choice == 3:
+                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -384,6 +404,7 @@ while True:
                                 continue
                             else:
                                 break
+                                
                     elif sub_choice == 4:
                         break
                     else:

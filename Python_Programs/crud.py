@@ -59,7 +59,10 @@ def is_city(country, state, city):
 
 
 def add_country(country):
-    data[country.lower()] = {}
+    if country.lower() in data:
+    	print('country already exits')
+    else:
+    	data[country.lower()] = {}
 
 
 def Display_state(country):
@@ -94,6 +97,7 @@ def is_state_empty(country):
         return False
     return True
 
+	
 def input_state():
     while True:
     	 state = str(input("Enter state name: "))
@@ -177,6 +181,11 @@ while True:
                             if not is_country(country.lower()):
                             	continue
                             state = input_state()
+                            
+                            if state.lower() in data[country.lower()]:
+                            	print("state is already exits!!!")
+                            	continue
+                                
                             data[country.lower()][state.lower()] = []
 
                             print(data)
@@ -204,6 +213,9 @@ while True:
                             if not is_state(country.lower(), state.lower()):
                             	continue
                             city = input_city()
+                            if city.lower() in data[country.lower()][state.lower()]:
+                            	print("city is already exits!!!")
+                            	continue
                             data[country.lower()][state.lower()].append(city.lower())
                             print(data)
                             corn= continueOrNot()
@@ -300,8 +312,13 @@ while True:
                             if not is_city(country.lower(), state.lower(), city.lower()):
                             	continue
                             new_city = input_city()
+                            
                             data[country.lower()][state.lower()].remove(city)
                             
+                            if new_city in data[country.lower()][state.lower()]:
+                            	print('city is already exits please try again')
+                            	break
+                            	
                             data[country.lower()][state.lower()].append(new_city)
                             print(data)
                             corn= continueOrNot()

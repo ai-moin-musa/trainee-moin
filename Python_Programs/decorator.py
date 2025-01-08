@@ -44,11 +44,10 @@ while True:
     print("3. Multiply")
     print("4. Divide")
     print("5. Modulo")
-    print("6. Power")
-    print("7. Exit")
+    print("6. Exit")
 
     choice = input("Enter choice: ")
-    if choice == "7":
+    if choice == "6":
         break
     
     try:

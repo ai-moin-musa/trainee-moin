@@ -1,9 +1,8 @@
 
 def find_file(dir,filename,path=''):
-	
 	for key,value in dir.items():
-	
-		curr_path = f"{path}\{key}"
+		
+		curr_path = f"{path}\\{key}"
 		
 		if key == filename:
 			return curr_path

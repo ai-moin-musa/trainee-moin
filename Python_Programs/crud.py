@@ -32,12 +32,10 @@ def continueOrNot():
 
 def validate_to_string(string):
     if not string.isalpha():
-    	print("Please Enter string ! not an integer.")
+    	print("Please Enter string !!!")
     	return False
     return True
 
-def add_state_continue():
-	pass
 
 def is_country(country):
     if country not in data:
@@ -167,7 +165,8 @@ while True:
                                     continue
                                 else:
                                     break
-					
+                                    
+                                    	
                             except ValueError:
                                 print("Invalid input. Please enter a string.")
                                 continue

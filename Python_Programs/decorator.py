@@ -6,9 +6,6 @@ def decorator(func):
         return result
     return wrapper
 
-
-
-
 @decorator
 def add(a, b):
     return a + b
@@ -43,9 +40,18 @@ while True:
     print("4. Divide")
     print("5. Modulo")
     print("6. Exit")
-
-    choice = input("Enter choice: ")
-    if choice == "6":
+    
+    try:
+    	choice = int(input("Enter choice: "))
+    except ValueError:
+    	print("Invalid input! Please Try again")
+    	break
+    	
+    if choice <= 0 or choice >6:
+    	print("Invalid choice! Please Try again")
+    	break
+    
+    if choice == 6:
         break
     
     try:
@@ -54,19 +60,18 @@ while True:
     except ValueError:
         print("Invalid input! Please enter number.")
       
-    if choice == '1':
+    if choice == 1:
         add(num1, num2)
-    elif choice == '2':
+    elif choice == 2:
         subtract(num1, num2)
-    elif choice == '3':
+    elif choice == 3:
         multiply(num1, num2)
-    elif choice == '4':
+    elif choice == 4:
         divide(num1, num2)
-    elif choice == '5':
+    elif choice == 5:
         modulo(num1, num2)
-    else:
-        print("Invalid choice! Please select a valid operation.")
+    
 
 end = time.time()
 
-print(f"time taken by program: {end - start}")
+print(f"time taken by program: {end - start} seconds")

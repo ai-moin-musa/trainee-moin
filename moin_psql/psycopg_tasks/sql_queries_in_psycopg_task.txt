@@ -1,0 +1,10 @@
+
+Query - 1
+select c.name,SUM(COALESCE(o.quantity*p.price,0)) as Total_Order_Value from customers as c LEFT JOIN orders as o ON c.id = o.customer_id LEFT JOIN products as p ON o.product_id = p.id GROUP BY c.name;
+
+
+Query - 2
+select p.id, p.name, p.price from products as p LEFT JOIN orders as o ON p.id = o.product_id where o.id is null;
+
+Query - 3
+select c.name, (p.price*o.quantity) as total_value from orders as o INNER JOIN customers as c ON o.customer_id = c.id INNER JOIN products as p ON o.product_id = p.id where p.price > 50;

@@ -14,8 +14,86 @@ data = {
     }
 }
 '''
+#implementation of the excel task. Line no : 29 - 96
+
+import openpyxl
+from openpyxl import Workbook, load_workbook
+import os
+
 data = {}
 
+
+filename = "country_state_city.xlsx"
+
+
+def insert_data_into_excel(data, filename):
+   
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Data"
+
+    # Add headers 
+    sheet.append(["Country", "State", "City"])
+
+    # Insert data in Excel file
+    for country, states in data.items():
+        if not states:  # add the country only
+            sheet.append([country, "", ""])
+        else:
+            first_state = True
+            for state, cities in states.items():
+                if not cities:  # add the state only
+                    if first_state:
+                        sheet.append([country, state, ""])
+                        first_state = False
+                    else:
+                        sheet.append(["", state, ""])
+                else:
+                    first_city = True
+                    for city in cities:
+                        if first_city:
+                            if first_state:
+                                sheet.append([country, state, city])
+                                first_state = False
+                            else:
+                                sheet.append(["", state, city])
+                            first_city = False
+                        else:
+                            sheet.append(["", "", city])
+        # Add  blank line 
+        sheet.append(["", "", ""])
+
+    
+    workbook.save(filename)
+    print(f"Data successfully written to {filename}")
+
+def retrieve_data_from_excel(filename):
+
+    if not os.path.exists(filename):
+        return {}
+   
+    workbook = load_workbook(filename)
+    sheet = workbook.active
+
+    data = {}
+    current_country = None
+    current_state = None
+
+    for row in sheet.iter_rows(min_row=2, values_only=True):
+        country, state, city = row
+
+        if country:
+            current_country = country
+            data[current_country] = {}
+
+        if state:
+            current_state = state
+            data[current_country][current_state] = []
+
+        if city:
+            data[current_country][current_state].append(city)
+
+    return data
 
 def continueOrNot():
     while True:
@@ -136,6 +214,7 @@ def input_city():
         return city.lower()
     
 
+
 def continue_adding_state():
      while True:
         Display_country()
@@ -160,7 +239,7 @@ def continue_adding_state():
             break
 
 #execution starts here-----------------
-       
+data = retrieve_data_from_excel(filename)       
 while True:
 
     print("""
@@ -443,6 +522,7 @@ while True:
                     continue
         
         elif choice == 4:
+            insert_data_into_excel(data, filename)
             break
         
         elif choice == 5:

@@ -60,165 +60,176 @@ class CurrentAccount(BankAccount):
         else:
             print("Exceeded overdraft limit or invalid amount.")
             
-
-
-# Example Usage
-if __name__ == "__main__":
-
-
-    accounts = {'saving':{},'current':{}}
-    while True:
-    	
-    	print("""
+def first_menu_show():
+	print("""
   First Menu------------
   1. opening New Account 
   2. existing Account
   3. exit
     	""")
     	
-    	try:
-    		choice = int(input("Enter a choice : "))
-    		
-    		if choice == 1:
-    			
-    			while True:
-    				print("""
+def second_menu_show():
+	print("""
   Opening New Acccount/Second Menu----------
   1. Saving Account
   2. Current Account
   3. exit
-    				""")
+    	     """)
+
+def existing_second_menu():
+	print("""
+  Existing Account/Second Menu----------
+  1. Saving Account
+  2. Current Account
+  3. exit
+    		""")
+
+def existing_third_menu():
+	print("""
+  Existing Account/saving account/Third Menu----------
+  1. Display Balance
+  2. Deposit
+  3. Withdraw
+  4. calculate interest rate
+  5. apply interest rate
+  6. exit
+    		""")
+
+def saving_third_menu():
+	print("""
+  Existing Account/saving account/Third Menu----------
+  1. Display Balance
+  2. Deposit
+  3. Withdraw
+  5. exit
+    		""")
+
+def opening_new_account():
+	while True:
+		second_menu_show()
+		try:
+			sub_choice = int(input("Enter a sub choice : "))    				
+			if sub_choice == 1:
     				try:
-    					sub_choice = int(input("Enter a sub choice : "))
-    				
-    					if sub_choice == 1:
-    						try:
-    							holder = str(input("Enter holder name: "))
-    							interest_rate = int(input("Enter interest rate(%): "))
-    							balance = int(input("Enter balance amount : "))
-    							SavingAccountObj = SavingAccount(holder, balance, interest_rate)
-    							SavingAccountObj.generate_account_number()
-    							ac = SavingAccountObj.get_account_number()
-    							accounts['saving'][ac] = SavingAccountObj
-    							print("account successfully created")
-    							print(f"A/C NO: {ac}")
-    							print(f"Name: {holder}")
-    							print(f"interest rate: {accounts['saving'][ac].interest_rate}")
-    							print(f"balance: {accounts['saving'][ac].balance}")
-    						except ValueError:
-    							print("Invalid Input!!! Please Try Again.")
-    						
-    						
-    						
-    					elif sub_choice == 2:
-    						try:
-    							holder = str(input("Enter holder name: "))
-    							balance = int(input("Enter balance amount : "))
-    							overdraft_limit = int(input("Enter overdraft_limit: "))
-    							
-    							CurrAccountObj = CurrentAccount(holder, balance, overdraft_limit)
-    							CurrAccountObj.generate_account_number()
-    							ac = CurrAccountObj.get_account_number()
-    							accounts['current'][ac] = CurrAccountObj
-    							print("account successfully created")
-    							print(f"A/C NO: {ac}")
-    							print(f"Name: {holder}")
-    							print(f"overdraft limit: {accounts['current'][ac].overdraft_limit}")
-    							print(f"balance: {accounts['current'][ac].balance}")
-    						except ValueError:
-    							print("Invalid Input!!! Please Try Again.")
-    					elif sub_choice == 3:
-    						break
-    					else:
-    						print("Invalid choice!!! Please try again.!")
-    						continue
+    					holder = str(input("Enter holder name: "))
+    					interest_rate = int(input("Enter interest rate(%): "))
+    					balance = int(input("Enter balance amount : "))
+    					SavingAccountObj = SavingAccount(holder, balance, interest_rate)
+    					SavingAccountObj.generate_account_number()
+    					ac = SavingAccountObj.get_account_number()
+    					accounts['saving'][ac] = SavingAccountObj
+    					print("account successfully created")
+    					print(f"A/C NO: {ac}")
+    					print(f"Name: {holder}")
+    					print(f"interest rate: {accounts['saving'][ac].interest_rate}")
+    					print(f"balance: {accounts['saving'][ac].balance}")
     				except ValueError:
-    					print("Invalid Input!!! Please Enter an integer!")
-    			
-    			
-    		elif choice == 2:
-    			while True:
-    				print("""
-    	Existing Account/Second Menu----------
-    	1. Saving Account
-    	2. Current Account
-    	3. exit
-    				""")
+    					print("Invalid Input!!! Please Try Again.")
+			elif sub_choice == 2:
     				try:
-    					sub_choice = int(input("Enter sub choice : "))
+    					holder = str(input("Enter holder name: "))
+    					balance = int(input("Enter balance amount : "))
+    					overdraft_limit = int(input("Enter overdraft_limit: "))		
+    					CurrAccountObj = CurrentAccount(holder, balance, overdraft_limit)
+    					CurrAccountObj.generate_account_number()
+    					ac = CurrAccountObj.get_account_number()
+    					accounts['current'][ac] = CurrAccountObj
+    					print("account successfully created")
+    					print(f"A/C NO: {ac}")
+    					print(f"Name: {holder}")
+    					print(f"overdraft limit: {accounts['current'][ac].overdraft_limit}")
+    					print(f"balance: {accounts['current'][ac].balance}")
+    				except ValueError:
+    					print("Invalid Input!!! Please Try Again.")
+			elif sub_choice == 3:
+				break
+			else:
+				print("Invalid choice !!! Please Try Again !!!")
+				continue
+		except ValueError:
+			print("Enter a valid input!!! Please Try Again!!!")
+
+		
+    		
+    	
+def existing_account():
+	while True:
+		existing_second_menu()
+		try:
+			sub_choice = int(input("Enter sub choice : "))
+			if sub_choice == 1:
+    				ac = int(input("Enter account number: "))
+    				if str(ac) not in accounts['saving']:
+    					print("Account No is incorrect!!! Please Try Again")
+    					continue
+    				obj = accounts['saving'][str(ac)]
+    				while True:
+    					existing_third_menu()
+    					sub_choice = int(input("Enter choice : "))
     					if sub_choice == 1:
-    						ac = int(input("Enter account number: "))
-    						if str(ac) not in accounts['saving']:
-    							print("Account No is incorrect!!! Please Try Again")
-    							continue
-    						obj = accounts['saving'][str(ac)]
-    						while True:
-    							print("""
-    	Existing Account/saving account/Third Menu----------
-    	1. Display Balance
-    	2. Deposit
-    	3. Withdraw
-    	4. calculate interest rate
-    	5. apply interest rate
-    	6. exit
-    							""")
-    							sub_choice = int(input("Enter choice : "))
-    							if sub_choice == 1:
-    								obj.display_balance()
-    								break
-    							elif sub_choice == 2:
-    								amount = int(input("Enter amount do you want deposit : "))
-    								obj.deposit(amount)
-    							elif sub_choice == 3:
-    								amount = int(input("Enter amount do you want withdraw : "))
-    								obj.withdraw(amount)
-    							elif sub_choice == 4:
-    								year = int(input("Enter time / years for calculating interest : "))
-    								obj.calculate_interest(year)
-    								
-    							elif sub_choice == 5:
-    								year = int(input("Enter time / years for apply interest : "))
-    								obj.apply_interest(year)
-    							elif sub_choice == 6:
-    								break
-    							else:
-    								print("Invalid choice!!! Please Try Again.")
+    						obj.display_balance()
     					elif sub_choice == 2:
-    						ac = int(input("Enter account number: "))
-    						if str(ac) not in accounts['current']:
-    							print("Account No is incorrect!!! Please Try Again")
-    							continue
-    						obj = accounts['current'][str(ac)]
-    						while True:
-    							print("""
-    	Existing Account/saving account/Third Menu----------
-    	1. Display Balance
-    	2. Deposit
-    	3. Withdraw
-    	5. exit
-    							""")
-    							sub_choice = int(input("Enter choice : "))
-    							if sub_choice == 1:
-    								obj.display_balance()
-    								
-    							elif sub_choice == 2:
-    								amount = int(input("Enter amount do you want deposit : "))
-    								obj.deposit(amount)
-    							elif sub_choice == 3:
-    								amount = int(input("Enter amount do you want withdraw : "))
-    								obj.withdraw(amount)
-    							elif sub_choice == 5:
-    								break
-    							else:
-    								print("Invalid choice!!! Please Try Again.")
-    							
+    						amount = int(input("Enter amount do you want deposit : "))
+    						obj.deposit(amount)
     					elif sub_choice == 3:
+    						amount = int(input("Enter amount do you want withdraw : "))
+    						obj.withdraw(amount)
+    					elif sub_choice == 4:
+    						year = int(input("Enter time / years for calculating interest : "))
+    						obj.calculate_interest(year)		
+    					elif sub_choice == 5:
+    						year = int(input("Enter time / years for apply interest : "))
+    						obj.apply_interest(year)
+    					elif sub_choice == 6:
     						break
     					else:
     						print("Invalid choice!!! Please Try Again.")
-    						continue
-    				except ValueError:
-    					print("Invalid Input!!! Please Try Again.")
+			elif sub_choice == 2:
+				ac = int(input("Enter account number: "))
+				if str(ac) not in accounts['current']:
+    					print("Account No is incorrect!!! Please Try Again")
+    					continue
+				obj = accounts['current'][str(ac)]
+				while True:
+    					saving_third_menu()
+    					sub_choice = int(input("Enter choice : "))
+    					if sub_choice == 1:
+    						obj.display_balance()	
+    					elif sub_choice == 2:
+    						amount = int(input("Enter amount do you want deposit : "))
+    						obj.deposit(amount)
+    					elif sub_choice == 3:
+    						amount = int(input("Enter amount do you want withdraw : "))
+    						obj.withdraw(amount)
+    					elif sub_choice == 5:
+    						break
+    					else:
+    						print("Invalid choice!!! Please Try Again.")		
+			elif sub_choice == 3:
+    				break
+			else:
+    				print("Invalid choice!!! Please Try Again.")
+    				continue
+		except ValueError:
+			print("Invalid Input !!! Please Try Again.")
+    					
+    					
+
+    	     
+# Example Usage
+if __name__ == "__main__":
+
+
+    accounts = {'saving':{},'current':{}}
+    while True:
+    	first_menu_show()
+    	try:
+    		choice = int(input("Enter a choice : "))
+    		
+    		if choice == 1:
+    			opening_new_account()
+    		elif choice == 2:
+    			existing_account()
     		elif choice == 3:
     			break
     		else:

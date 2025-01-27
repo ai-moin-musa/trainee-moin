@@ -11,7 +11,7 @@ company = {
     "Team Leads": {
         "Mark": {"experience": 8, "junior_developers": ["Leonardo", "Alexandra"]},
         "Samuel": {"experience": 8},
-        "Paul": {"experience": 8, "senior_developer": ["Fergal"]},
+        "Paul": {"experience": 8, "senior_developers": ["Fergal"]},
         "Tom": {"experience": 8, "junior_developers": ["Jerry", "John"]},
         "Chris": {
             "experience": 5,
@@ -26,15 +26,17 @@ company = {
         "Smith": {
             "experience": 5,
             "senior_developers": ["Walker", "Diana"],
-        }
+        },
+        "James":{
+            "experience":0,
+            "senior_developers": ["Jennifer","Scott","Sophie"],
+            }
     },
     "Senior Developers": {
-        "James": {
-            "experience": 3,
-            "manager": "Chris",
-            "team_members": ["Jennifer", "Scott", "Sophie"]
-        },
-        "Fergal": {"experience": 4.5, "mentor": "Paul"},
+        "Jennifer": {"experience": 3.8, "manager": "James"},
+        "Scott": {"experience":3.8,"manager":"James"},
+        "Smith": {"experience":3.8, "manager":"James"},
+        "Fergal": {"experience": 4.5, "manager": "Paul"},
         "Edge": {"experience": 3, "manager": "Will"},
         "Ryan": {"experience": 3.5, "manager": "Will"},
         "Walker": {"experience": 2.7, "manager": "Smith"},
@@ -97,11 +99,12 @@ def reassign_team(company, leaving_tl, new_manager):
 
 
 def has_employee_with_experience_less_than(company, years):
+    employees = []
     for role, group in company.items():
         for name, details in group.items():
-            if details.get("experience", float("inf")) < years:
-                return True
-    return False
+            if details.get("experience", float("inf")) < years and details.get("experience") != 0:
+                employees.append(name)
+    return employees
 
 
 def promote_to_tl(company, employee_name):
@@ -114,10 +117,15 @@ def promote_to_tl(company, employee_name):
     print(company["Team Leads"])
         
 
-# Example Usage
-print("Employees under Robert Downey:", display_employees_by_manager(company, "Robert Downey"))
-print("\n\n")
-print("Employees with experience > 4 years:", display_employees_with_experience(company, 4))
+#Example Usage
+project_manager = str(input("Enter project manager name : "))
+employees = display_employees_by_manager(company, project_manager)
+print(f"Employees under {project_manager}: {employees}")
+try:
+	years = int(input("Enter years for employees whose experience is more than years :"))
+	print(display_employees_with_experience(company,years))
+except Exception as e:
+	print(f"Invalid Input !!! Please Try again !!!")
 print("\n\n")
 update_experience(company)
 print("Updated experience:", company)
@@ -127,8 +135,17 @@ print("\n\n")
 reassign_team(company, "Smith", "Ryan")
 print("After reassigning Smith's team to Ryan:", company)
 print("\n\n")
-print("Any employee with < 2 years of experience:", has_employee_with_experience_less_than(company, 2))
+reassign_team(company, "Smith", "Ryan")
+print("After reassigning Smith's team to Ryan:", company)
+print("\n\n")
+try:
+	years = int(input("Enter years for employees with less than years of experience :"))
+	print("Any employee with less than years of experience:", has_employee_with_experience_less_than(company, years))
+except Exception as e:
+	print(f"Invalid Input !!! Please Try again !!!")
 print("\n\n")
 print("After promoting Edge to TL:")
 promote_to_tl(company, "Edge")
 print("\n\n")
+
+

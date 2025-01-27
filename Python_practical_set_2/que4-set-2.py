@@ -81,7 +81,10 @@ def update_experience(company):
 def display_tl_with_experience(company):
     tls = {}
     for name, details in company.get("Team Leads", {}).items():
-        tls[name] = details.get("experience", "N/A")
+    	if details.get("experience") == 0:
+    	      tls[name] = "N/A"
+    	else:
+              tls[name] = details.get("experience", "N/A")
     return tls
 
 
@@ -90,6 +93,7 @@ def reassign_team(company, leaving_tl, new_manager):
         team_members = company["Team Leads"].pop(leaving_tl).get("senior_developers", [])
         for member in team_members:
             company["Senior Developers"][member]["manager"] = new_manager
+    
 
 
 def has_employee_with_experience_less_than(company, years):
@@ -107,15 +111,24 @@ def promote_to_tl(company, employee_name):
             "experience": details.get("experience", "N/A"),
             "senior_developers": []
         }
+    print(company["Team Leads"])
+        
 
 # Example Usage
 print("Employees under Robert Downey:", display_employees_by_manager(company, "Robert Downey"))
+print("\n\n")
 print("Employees with experience > 4 years:", display_employees_with_experience(company, 4))
+print("\n\n")
 update_experience(company)
 print("Updated experience:", company)
+print("\n\n")
 print("Team Leads with experience:", display_tl_with_experience(company))
+print("\n\n")
 reassign_team(company, "Smith", "Ryan")
 print("After reassigning Smith's team to Ryan:", company)
+print("\n\n")
 print("Any employee with < 2 years of experience:", has_employee_with_experience_less_than(company, 2))
+print("\n\n")
+print("After promoting Edge to TL:")
 promote_to_tl(company, "Edge")
-print("After promoting Edge to TL:", company)
+print("\n\n")

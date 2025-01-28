@@ -8,8 +8,17 @@ class BankAccount:
     
     
     def generate_account_number(self):
-    		for i in range(1, 11):
-    			self.account_number += str(random.randrange(0,9))
+    		try:
+    			while True:
+    				ac = int(input("Enter a account number : "))
+    				if str(ac) in accounts['saving'] or str(ac) in accounts['current']:
+    					print("Account number already exists Please select other account number")
+    					continue
+    				break
+    			self.account_number = str(ac)
+    			print(f"Successfully generated account no : {self.account_number}")
+    		except Exception as e:
+    			print(f"Invalid Input!!! Please Try Again.")
     			
     def get_account_number(self):
     	return self.account_number

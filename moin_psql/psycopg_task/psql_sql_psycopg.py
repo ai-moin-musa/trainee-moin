@@ -25,7 +25,7 @@ for row in result:
 	
 	
 cursor.execute('''
-select p.id, p.name, p.price from products as p LEFT JOIN orders as o ON p.id = o.product_id where o.id is null;
+select p.id, p.name, p.price from orders as o RIGHT JOIN products as p ON o.id = p.id WHERE o.id IS NULL;
 ''')
 
 result = cursor.fetchall()

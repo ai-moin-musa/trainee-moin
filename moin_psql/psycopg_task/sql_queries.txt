@@ -4,7 +4,11 @@ select c.name,SUM(COALESCE(o.quantity*p.price,0)) as Total_Order_Value from cust
 
 
 Query - 2
-select p.id, p.name, p.price from products as p LEFT JOIN orders as o ON p.id = o.product_id where o.id is null;
+select p.id, p.name, p.price from orders as o RIGHT JOIN products as p ON o.id = p.id WHERE o.id IS NULL
 
 Query - 3
 select c.name, (p.price*o.quantity) as total_value from orders as o INNER JOIN customers as c ON o.customer_id = c.id INNER JOIN products as p ON o.product_id = p.id where p.price > 50;
+
+
+to save in excel file i use copy command :
+\copy (query) TO 'output_filename' CSV HEADER;

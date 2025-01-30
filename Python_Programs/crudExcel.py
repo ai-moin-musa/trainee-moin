@@ -1,7 +1,5 @@
-
 '''
 ****Data Structure****
-
 data = {
     "india":{
         "Gujarat": ["Palanpur","Ahmedabad","Surat","Mahesana","Vadodara"],
@@ -10,32 +8,21 @@ data = {
     },
     "Australia":{
     	"South Australia": ["Sydney"]
-    
     }
 }
 '''
 #implementation of the excel task. Line no : 29 - 96
-
 import openpyxl
 from openpyxl import Workbook, load_workbook
 import os
-
 data = {}
-
-
 filename = "country_state_city.xlsx"
 
-
 def insert_data_into_excel(data, filename):
-   
     workbook = Workbook()
     sheet = workbook.active
     sheet.title = "Data"
-
-    # Add headers 
     sheet.append(["Country", "State", "City"])
-
-    # Insert data in Excel file
     for country, states in data.items():
         if not states:  # add the country only
             sheet.append([country, "", ""])
@@ -60,39 +47,28 @@ def insert_data_into_excel(data, filename):
                             first_city = False
                         else:
                             sheet.append(["", "", city])
-        # Add  blank line 
         sheet.append(["", "", ""])
-
-    
     workbook.save(filename)
     print(f"Data successfully written to {filename}")
 
 def retrieve_data_from_excel(filename):
-
     if not os.path.exists(filename):
         return {}
-   
     workbook = load_workbook(filename)
     sheet = workbook.active
-
     data = {}
     current_country = None
     current_state = None
-
     for row in sheet.iter_rows(min_row=2, values_only=True):
         country, state, city = row
-
         if country:
             current_country = country
             data[current_country] = {}
-
         if state:
             current_state = state
             data[current_country][current_state] = []
-
         if city:
             data[current_country][current_state].append(city)
-
     return data
 
 def continueOrNot():
@@ -127,13 +103,11 @@ def validate_to_string(string):
         return False
     return True
 
-
 def is_country(country):
     if country not in data:
         print("Country not found. Please try again.")
         return False
     return True
-
 
 def is_state(country, state):
     if state not in data[country]:
@@ -141,13 +115,11 @@ def is_state(country, state):
         return False
     return True
 
-
 def is_city(country, state, city):
     if city not in data[country][state]:
         print("City not found. Please try again.")
         return False
     return True
-
 
 def add_country(country):
     if country.lower() in data:
@@ -155,18 +127,14 @@ def add_country(country):
     else:
         data[country.lower()] = {}
 
-
 def Display_state(country):
     print("States: ", list(data[country].keys()))
-
 
 def Display_city(country, state):
     print("cities: ", list(data[country][state]))
 
-
 def Display_country():
     print("Countries: ", list(data.keys()))
-
 
 def is_country_empty():
     if not bool(data):
@@ -174,13 +142,11 @@ def is_country_empty():
         return False
     return True
 
-
 def is_city_empty(country, state):
     if not bool(data[country][state]):
         print("empty!!! city not found")
         return False
     return True
-
 
 def is_state_empty(country):
     if not bool(data[country]):
@@ -188,7 +154,6 @@ def is_state_empty(country):
         return False
     return True
 
-	
 def input_state():
     while True:
         state = str(input("Enter state name: "))
@@ -212,8 +177,6 @@ def input_city():
         if not val:
             continue
         return city.lower()
-    
-
 
 def continue_adding_state():
      while True:
@@ -237,11 +200,9 @@ def continue_adding_state():
             continue
         else:
             break
-
 #execution starts here-----------------
 data = retrieve_data_from_excel(filename)       
 while True:
-
     print("""
         Select operation:
            1. Add
@@ -249,11 +210,9 @@ while True:
            3. Delete
            4. Exit
            5. Display
-    """) 
-    
+    """)
     try:
-        choice = int(input("Enter choice: "))  
-        
+        choice = int(input("Enter choice: "))
         if choice == 1:
             while True:
                 try:
@@ -266,16 +225,10 @@ while True:
                         continue
                     else:
                         break
-                                        
-                             
-                                    
-                                    	
+
                 except ValueError:
                     print("Invalid input. Please enter a string.")
                     continue
-                                
-        
-                    
             while True:
                 print("-----------adding state-------------")        
                 Display_country()
@@ -289,31 +242,24 @@ while True:
                 if state.lower() in data[country.lower()]:
                     print("state is already exits!!!")
                     continue
-                                
                 data[country.lower()][state.lower()] = []
-
                 print(data)
                 corn= continueOrNotWithMessage("enter another state")
                 if corn:
                     continue
                 else:
                     break
-
-                     
-                        
             while True: 
                 print("-----------adding city-------------")
                 Display_country()
                 if not is_country_empty():
                     break
-                
                 country = str(input("select country name: "))
                 if not is_country(country.lower()):
                     continue
                 if not is_state_empty(country.lower()):
                     break
                 Display_state(country.lower())
-                
                 state = str(input("select state name: "))
                 if not is_state(country.lower(), state.lower()):
                     continue
@@ -328,9 +274,7 @@ while True:
                     continue
                 else:
                     break
-
         elif choice == 2:
-        
             while True:
                 print("""
                     ****Update*****
@@ -343,7 +287,6 @@ while True:
                 try:
                     sub_choice = int(input("Enter choice: "))
                     if sub_choice == 1:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -352,7 +295,9 @@ while True:
                             if not is_country(country.lower()):
                                 continue
                             new_country = input_country()
-                            
+                            if new_country in data.keys():
+                                print("Please Try another country name do not use same name or available country name")
+                                break
                             data[new_country.lower()] = data.pop(country.lower())
                             print(data)
                             corn= continueOrNot()
@@ -360,9 +305,7 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 2:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -384,9 +327,7 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 3:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -407,13 +348,10 @@ while True:
                             if not is_city(country.lower(), state.lower(), city.lower()):
                                 continue
                             new_city = input_city()
-                            
                             data[country.lower()][state.lower()].remove(city)
-                            
                             if new_city in data[country.lower()][state.lower()]:
                                 print('city is already exits please try again')
                                 break
-                            	
                             data[country.lower()][state.lower()].append(new_city)
                             print(data)
                             corn= continueOrNot()
@@ -421,7 +359,6 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 4:
                         break
                     else:
@@ -429,9 +366,7 @@ while True:
                 except ValueError:
                     print("Invalid input. Please enter a number.")
                     continue
-        
         elif choice == 3:
-        
             while True:
                 print("""
                     ****Delete*****
@@ -444,7 +379,6 @@ while True:
                 try:
                     sub_choice = int(input("Enter choice: "))
                     if sub_choice == 1:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -459,9 +393,7 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 2:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -482,9 +414,7 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 3:
-                    
                         while True:
                             Display_country()
                             if not is_country_empty(): 
@@ -512,7 +442,6 @@ while True:
                                 continue
                             else:
                                 break
-                                
                     elif sub_choice == 4:
                         break
                     else:
@@ -520,17 +449,13 @@ while True:
                 except ValueError:
                     print("Invalid input. Please enter a number.")
                     continue
-        
         elif choice == 4:
             insert_data_into_excel(data, filename)
             break
-        
         elif choice == 5:
             print(f"{data}")
-
         else:
             print("Invalid choice. Please try again.")
-
     except ValueError:
         print("Invalid input. Please enter a number.")
         continue

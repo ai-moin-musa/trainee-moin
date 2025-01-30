@@ -4,7 +4,7 @@ class BankAccount:
 		self.holder = holder
 		self.balance = balance if balance >= 0 else 0
 
-	def generate_account_number(self):
+	def get_account_no_from_user(self):
 		try:
 			while True:
 				ac = int(input("Enter a account number : "))
@@ -89,7 +89,7 @@ def create_saving_account():
 		interest_rate = int(input("Enter interest rate(%): "))
 		balance = int(input("Enter balance amount : "))
 		SavingAccountObj = SavingAccount(holder, balance, interest_rate)
-		SavingAccountObj.generate_account_number()
+		SavingAccountObj.get_account_no_from_user()
 		ac = SavingAccountObj.get_account_number()
 		accounts['saving'][ac] = SavingAccountObj
 		print("account successfully created")
@@ -111,7 +111,7 @@ def create_current_account():
 		balance = int(input("Enter balance amount : "))
 		overdraft_limit = int(input("Enter overdraft_limit: "))
 		CurrAccountObj = CurrentAccount(holder, balance, overdraft_limit)
-		CurrAccountObj.generate_account_number()
+		CurrAccountObj.get_account_no_from_user()
 		ac = CurrAccountObj.get_account_number()
 		accounts['current'][ac] = CurrAccountObj
 		print("account successfully created")

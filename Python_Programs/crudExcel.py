@@ -19,6 +19,9 @@ data = {}
 filename = "country_state_city.xlsx"
 
 def insert_data_into_excel(data, filename):
+    """"
+    this function insert data into the excel file.
+    """
     workbook = Workbook()
     sheet = workbook.active
     sheet.title = "Data"
@@ -52,6 +55,9 @@ def insert_data_into_excel(data, filename):
     print(f"Data successfully written to {filename}")
 
 def retrieve_data_from_excel(filename):
+    """"
+        this function retrieve data from the excel file.
+    """
     if not os.path.exists(filename):
         return {}
     workbook = load_workbook(filename)
@@ -72,6 +78,10 @@ def retrieve_data_from_excel(filename):
     return data
 
 def continueOrNot():
+    """"
+        this function return true if user input y and return false if user input n.
+        which means know the user want continue or not
+    """
     while True:
         try:
             choice = str(input("Do you want to continue? (y/n): "))
@@ -85,6 +95,11 @@ def continueOrNot():
             print("Invalid input. Please enter 'y' or 'n'.")
 
 def continueOrNotWithMessage(message):
+    """"
+            this function return true if user input y and return false if user input n.
+            which means know the user want continue or not
+            we can additional parameter set message.
+    """
     while True:
         try:
             choice = str(input(f"Do you want to {message}? (y/n): "))
@@ -98,63 +113,99 @@ def continueOrNotWithMessage(message):
             print("Invalid input. Please enter 'y' or 'n'.")
 
 def validate_to_string(string):
+    """"
+        this function validating the string. string can not contain numbers.
+    """
     if not string.isalpha():
         print("Please Enter string !!!")
         return False
     return True
 
 def is_country(country):
+    """"
+        to_check the is it country or not. if country does not exists in data return False
+    """
     if country not in data:
         print("Country not found. Please try again.")
         return False
     return True
 
 def is_state(country, state):
+    """"
+    to check the state is exists or not corrensponding the country.
+    """
     if state not in data[country]:
         print("State not found. Please try again.")
         return False
     return True
 
 def is_city(country, state, city):
+    """"
+    to check city is exists or not corrensponding state and country
+    """
     if city not in data[country][state]:
         print("City not found. Please try again.")
         return False
     return True
 
 def add_country(country):
+    """"
+    this function convert country in lower and add them to data
+    """
     if country.lower() in data:
         print('country already exits')
     else:
         data[country.lower()] = {}
 
 def Display_state(country):
+    """
+    display the state corrensponding country
+    """
     print("States: ", list(data[country].keys()))
 
 def Display_city(country, state):
+    """
+    display the city corrensponding state and country
+    """
     print("cities: ", list(data[country][state]))
 
 def Display_country():
+    """
+    this function to display countries
+    """
     print("Countries: ", list(data.keys()))
 
 def is_country_empty():
+    """
+    this function checking is data has countries or not. if data has not any country return false.
+    """
     if not bool(data):
         print("empty!!! country not found")
         return False
     return True
 
 def is_city_empty(country, state):
+    """
+    this function checking is state has cities or not.
+    """
     if not bool(data[country][state]):
         print("empty!!! city not found")
         return False
     return True
 
 def is_state_empty(country):
+    """
+    this function checking is country has states or not.
+    """
     if not bool(data[country]):
         print("empty!!! state not found")
         return False
     return True
 
 def input_state():
+    """
+    this function get state from the user.
+    """
     while True:
         state = str(input("Enter state name: "))
         val =  validate_to_string(state)
@@ -163,6 +214,9 @@ def input_state():
         return state.lower()
 
 def input_country():
+    """
+    this fuction get country from the user.
+    """
     while True:
         country = str(input("Enter Country name: "))
         val = validate_to_string(country)
@@ -171,6 +225,9 @@ def input_country():
         return country.lower()
     	 
 def input_city():
+    """
+    this function get city from the user
+    """
     while True:
         city = str(input("Enter City name: "))
         val = validate_to_string(city)
@@ -179,7 +236,10 @@ def input_city():
         return city.lower()
 
 def continue_adding_state():
-     while True:
+    """
+    this function for continuesly adding state.
+    """
+    while True:
         Display_country()
         if not is_country_empty(): 
             break
@@ -187,13 +247,10 @@ def continue_adding_state():
         if not is_country(country.lower()):
             continue
         state = input_state()
-        
         if state.lower() in data[country.lower()]:
             print("state is already exits!!!")
             continue
-            
         data[country.lower()][state.lower()] = []
-
         print(data)
         corn= continueOrNot()
         if corn:
@@ -220,12 +277,12 @@ while True:
                     country = input_country()
                     add_country(country) 
                     print(data)
+                    print("country added......")
                     corn= continueOrNotWithMessage("enter another country")
                     if corn:
                         continue
                     else:
                         break
-
                 except ValueError:
                     print("Invalid input. Please enter a string.")
                     continue
@@ -238,12 +295,16 @@ while True:
                 if not is_country(country.lower()):
                     continue
                 state = input_state()
-                            
                 if state.lower() in data[country.lower()]:
                     print("state is already exits!!!")
-                    continue
+                    corn = continueOrNotWithMessage("enter another state")
+                    if corn:
+                        continue
+                    else:
+                        break
                 data[country.lower()][state.lower()] = []
                 print(data)
+                print("state added......")
                 corn= continueOrNotWithMessage("enter another state")
                 if corn:
                     continue
@@ -266,9 +327,14 @@ while True:
                 city = input_city()
                 if city.lower() in data[country.lower()][state.lower()]:
                     print("city is already exits!!!")
-                    continue
+                    corn = continueOrNotWithMessage("enter another city")
+                    if corn:
+                        continue
+                    else:
+                        break
                 data[country.lower()][state.lower()].append(city.lower())
                 print(data)
+                print("city added......")
                 corn= continueOrNotWithMessage("enter another city")
                 if corn:
                     continue
@@ -300,6 +366,7 @@ while True:
                                 break
                             data[new_country.lower()] = data.pop(country.lower())
                             print(data)
+                            print("country updated......")
                             corn= continueOrNot()
                             if corn:
                                 continue
@@ -322,6 +389,7 @@ while True:
                             new_state = input_state()
                             data[country.lower()][new_state.lower()] = data[country.lower()].pop(state.lower())
                             print(data)
+                            print("state updated......")
                             corn= continueOrNot()
                             if corn:
                                 continue
@@ -354,6 +422,7 @@ while True:
                                 break
                             data[country.lower()][state.lower()].append(new_city)
                             print(data)
+                            print("city updated......")
                             corn= continueOrNot()
                             if corn:
                                 continue
@@ -388,6 +457,7 @@ while True:
                                 continue
                             data.pop(country.lower())
                             print(data)
+                            print("country deleted......")
                             corn= continueOrNot()
                             if corn:
                                 continue
@@ -409,6 +479,7 @@ while True:
                                 continue
                             data[country.lower()].pop(state.lower())
                             print(data)
+                            print("state deleted......")
                             corn= continueOrNot()
                             if corn:
                                 continue
@@ -437,6 +508,7 @@ while True:
                                 continue
                             data[country.lower()][state.lower()].remove(city)
                             print(data)
+                            print("city deleted......")
                             corn= continueOrNot()
                             if corn:
                                 continue

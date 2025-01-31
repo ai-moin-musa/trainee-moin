@@ -248,7 +248,7 @@ def continue_adding_state():
             continue
         state = input_state()
         if state.lower() in data[country.lower()]:
-            print("state is already exits!!!")
+            print("state is already exists!!!")
             continue
         data[country.lower()][state.lower()] = []
         print(data)
@@ -326,7 +326,7 @@ while True:
                     continue
                 city = input_city()
                 if city.lower() in data[country.lower()][state.lower()]:
-                    print("city is already exits!!!")
+                    print("city is already exists!!!")
                     corn = continueOrNotWithMessage("enter another city")
                     if corn:
                         continue
@@ -418,7 +418,7 @@ while True:
                             new_city = input_city()
                             data[country.lower()][state.lower()].remove(city)
                             if new_city in data[country.lower()][state.lower()]:
-                                print('city is already exits please try again')
+                                print('city is already exists please try again')
                                 break
                             data[country.lower()][state.lower()].append(new_city)
                             print(data)
@@ -502,7 +502,6 @@ while True:
                             if not is_city_empty(country.lower(), state.lower()):
                                 break
                             Display_city(country.lower(), state.lower())
-                            
                             city = str(input("select city name: "))
                             if not is_city(country.lower(), state.lower(), city.lower()):
                                 continue
